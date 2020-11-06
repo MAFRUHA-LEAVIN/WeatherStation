@@ -1,0 +1,30 @@
+body {
+  background-color:white;
+
+ }
+ .nav-item {
+    font-style: italic;
+    color: black;
+    
+    
+  }
+  .navbar-nav {
+    background-color:rgb(185, 130, 138);
+    border-radius: 40px;
+    font-size: 30;
+    color: #000;
+
+  }
+  :hover navbar-item {
+    width: 60%;
+    
+  }
+  
+  .bg-white {
+    position: relative;
+    bottom: 35px;
+  }
+  .media {
+    position: relative;
+    top: 50px;
+  }

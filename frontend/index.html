@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<title>Mafruha Nuhary</title>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" type="text/javascript"></script>
+</head>
+<body>
+        <h1>BTS</h1>
+        <p></p>
+        <p id="demo">This is a paragraph.</p>
+        <button onclick="myFunction()">Click Me!</button>
+        <p>Mafruha Numhary student of Software Engineering At TAMK ,Creative person , wishes to build a website for him self.</p>
+        <p> I will Graduate from TAMK Applied Science Univeristy shown in the first line with red color :)</p>
+        
+        <p>Welcome to hell </p>
+          
+            <script>
+                var countDownDate = new Date("jun 31, 2022 15:37:25").getTime();
+                var x = setInterval(function() {
+                var now = new Date().getTime();
+                var distance = countDownDate - now;
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                + minutes + "m " + seconds + "s ";
+                if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+                }
+                }, 1000);
+        </script>
+        
+        <p> 
+        
+        <h1>Body Mass Index Calculator</h1>
+        <p>Enter your height: <input type="text" id="height"/>
+            <select type="multiple" id="heightunits">
+                <option value="metres" selected="selected">metres</option>
+                <option value="inches">inches</option>
+            </select>
+             </p>
+        <p>Enter your weight: <input type="text" id="weight"/>
+            <select type="multiple" id="weightunits">
+                <option value="kg" selected="selected">kilograms</option>
+                <option value="lb">pounds</option>
+            </select>
+        </p>
+        <input type="submit" value="computeBMI" onclick="computeBMI();">
+        <h1>Your BMI is: <span id="output">?</span></h1>
+        
+        <h2>This means you are: <span id="comment"> ?</span> </h2> 
+    </p>
+    </body>
+</html>

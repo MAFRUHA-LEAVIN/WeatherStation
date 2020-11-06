@@ -1,0 +1,75 @@
+body {
+    background-color: rgb(193,168,199);
+   }
+   
+   h1 {
+    color: rgb(32,122,95);
+    text-align: center;
+   }
+   #demo{
+font-family :verdana;
+font-size :20px;
+   }
+   #timer{
+       font-family: 'courier New',Courier,monospace;
+font-size: 30px;
+}
+   button{
+       font-size: 26px;
+   }
+   .btn{
+   text-align: center;
+   color:white;
+   padding: 20px;
+   margin: 4px 2px;
+   background-color:rgb(red, green, blue);
+   border: none;
+   border-radius: auto;
+
+   }
+  silver{
+    background-color: silver;
+    color: black;
+    grid-column: -2;
+    grid-row:3 / span 4;
+
+   }
+   .orange{
+    background-color: orange;
+   }
+   
+
+   .cal-display {
+       grid-area: header;
+       grid-row-start: 1;
+       grid-row-end: 1;
+       background-color: black;
+       color: white;
+       text-align:right;
+    
+   }
+   .container{
+   max-width:40%;
+   }
+   .calculator{
+    font-size: 65px;
+    background-color: black;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    display: grid;
+    justify-content: center;
+    grid-template-columns:80px,80px,80px,80px;
+    grid-template-rows: 80px,80px;
+    grid-template-areas: "header header"
+    "main main main main" 
+    "main main main main" 
+    "main main main main" 
+    "main main main main" 
+   }
+   
+
+   .my-style-select {
+    background-color: blue;
+   }

@@ -1,0 +1,7 @@
+FROM library/postgres
+ENV POSTGRES_USER weather
+ENV POSTGRES_PASSWORD weather
+ENV POSTGRES_DB weather_db
+COPY ./.dockerfiles/init_db.sql /docker-entrypoint-initdb.d/
+WORKDIR /docker-entrypoint-initdb.d
+

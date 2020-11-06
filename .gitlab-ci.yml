@@ -1,0 +1,58 @@
+variables:
+  REMOTE_HOST: deploy@web-development-30017 
+  REMOTE_DIR: weather-app
+
+stages:
+  - test
+  - deploy
+
+test:
+  image: mhart/alpine-node
+  stage: test
+  cache:
+    paths:
+      - ~/.cache/yarn/
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - backend/node_modules/
+  script:
+    - cd backend
+    - ls -al
+    - yarn install
+    - yarn test
+
+deploy:
+  image: docker:latest
+  stage: deploy
+  services:
+    - docker:dind
+  dependencies:
+    - test
+  script:
+    - export WEBAPP_IMAGE="${CI_REGISTRY_IMAGE}/frontend"
+    - export API_IMAGE="${CI_REGISTRY_IMAGE}/backend"
+    - export DB_IMAGE="${CI_REGISTRY_IMAGE}/db"
+    - apk update && apk add rsync openssh
+    - docker login -u gitlab-ci-token -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
+    - mkdir -p ~/.ssh && (umask  077 ; echo "${DEPLOY_KEY_PRIVATE}" | base64 -d > ~/.ssh/id_rsa)
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - docker build --no-cache -f .dockerfiles/webAppProd -t "${WEBAPP_IMAGE}" .
+    - docker build --no-cache -f .dockerfiles/apiProd -t "${API_IMAGE}" .
+    - docker build --no-cache -f .dockerfiles/db -t "${DB_IMAGE}" .
+    - docker push "${WEBAPP_IMAGE}"
+    - docker push "${API_IMAGE}"
+    - docker push "${DB_IMAGE}"
+    - mkdir "${REMOTE_DIR}"
+    - cp docker-compose.prod.yml "${REMOTE_DIR}/docker-compose.yml"
+    - echo "WEBAPP_IMAGE=${WEBAPP_IMAGE}" >> "${REMOTE_DIR}/.env"
+    - echo "API_IMAGE=${API_IMAGE}" >> "${REMOTE_DIR}/.env"
+    - echo "DB_IMAGE=${DB_IMAGE}" >> "${REMOTE_DIR}/.env"
+    - rsync -r "${REMOTE_DIR}" "${REMOTE_HOST}:./"
+    - ssh ${REMOTE_HOST} /bin/bash "
+        echo ${REMOTE_DIR};
+        cd ~/$REMOTE_DIR;
+        docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY;
+        docker-compose pull;
+        docker-compose up -d --force-recreate
+        "
